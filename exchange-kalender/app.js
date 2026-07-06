@@ -88,22 +88,30 @@ async function initMsal() {
   });
 
   await msalInstance.initialize();
-  await msalInstance.handleRedirectPromise().catch((e) => console.error(e));
 
-  const accounts = msalInstance.getAllAccounts();
-  if (accounts.length > 0) {
-    account = accounts[0];
-    updateAccountUI();
+  // Nach einem Redirect-Login/-Logout landet der Browser hier wieder mit dem
+  // Auth-Code im URL-Fragment; handleRedirectPromise() verarbeitet ihn.
+  const redirectResult = await msalInstance.handleRedirectPromise().catch((e) => {
+    console.error(e);
+    showStatus("Anmeldung fehlgeschlagen: " + e.message, "error");
+    return null;
+  });
+
+  if (redirectResult?.account) {
+    account = redirectResult.account;
+  } else {
+    const accounts = msalInstance.getAllAccounts();
+    if (accounts.length > 0) account = accounts[0];
   }
+  updateAccountUI();
 }
 
 async function signIn() {
   try {
-    const result = await msalInstance.loginPopup({ scopes: SCOPES });
-    account = result.account;
-    updateAccountUI();
-    showStatus("", "");
-    await loadAndRenderMonth();
+    // Redirect-Flow statt Popup: zuverlässiger auf Mobilgeräten und bei
+    // Popup-Blockern. Die Seite navigiert zum Microsoft-Login und kehrt
+    // danach zur redirectUri zurück (siehe initMsal/handleRedirectPromise).
+    await msalInstance.loginRedirect({ scopes: SCOPES });
   } catch (e) {
     console.error(e);
     showStatus("Anmeldung fehlgeschlagen: " + e.message, "error");
@@ -111,13 +119,12 @@ async function signIn() {
 }
 
 async function signOut() {
-  const current = account;
-  account = null;
-  exchangeEventsByDate = new Map();
-  updateAccountUI();
-  renderCalendar();
-  if (current) {
-    await msalInstance.logoutPopup({ account: current }).catch(() => {});
+  if (!account) return;
+  try {
+    await msalInstance.logoutRedirect({ account });
+  } catch (e) {
+    console.error(e);
+    showStatus("Abmeldung fehlgeschlagen: " + e.message, "error");
   }
 }
 
@@ -128,8 +135,11 @@ async function getAccessToken() {
     const result = await msalInstance.acquireTokenSilent(request);
     return result.accessToken;
   } catch (e) {
-    const result = await msalInstance.acquireTokenPopup(request);
-    return result.accessToken;
+    // Silent-Renewal fehlgeschlagen (z.B. abgelaufene Session): per Redirect
+    // erneut interaktiv anmelden. Die Seite navigiert weg, daher geht der
+    // aktuell laufende Vorgang (z.B. ein offenes Termin-Formular) dabei verloren.
+    await msalInstance.acquireTokenRedirect(request);
+    throw new Error("Anmeldung erforderlich – Weiterleitung zum Microsoft-Login…");
   }
 }
 

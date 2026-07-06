@@ -102,7 +102,9 @@ Azure-App-Registrierung entsprechend angepasst werden (z. B. `http://localhost:3
 
 ## 4. Nutzung
 
-- **„Mit Microsoft anmelden“** klicken → Microsoft-Login-Popup → Zugriff bestätigen.
+- **„Mit Microsoft anmelden“** klicken → die Seite leitet dich zum Microsoft-Login
+  weiter (Redirect-Flow, kein Popup) → nach Zugriffsbestätigung kehrst du
+  automatisch zur Kalenderseite zurück.
 - Nach dem Login werden deine Exchange-Termine für den angezeigten Monat geladen.
 - Über **„+ Neuer Termin“** oder Klick auf einen Tag kannst du direkt einen neuen
   Termin in deinem Exchange-Kalender anlegen (Betreff, Datum, Uhrzeit oder
@@ -124,5 +126,9 @@ Azure-App-Registrierung entsprechend angepasst werden (z. B. `http://localhost:3
   aktuellen URL ermittelt).
 - Mehrtägige/ganztägige Exchange-Termine werden auf jedem betroffenen Tag
   angezeigt.
+- Anmeldung/Abmeldung laufen per Redirect (volle Seitennavigation zum
+  Microsoft-Login und zurück), nicht per Popup. Falls dabei gerade ein
+  Termin-Formular offen war (z.B. weil eine erneute interaktive Anmeldung
+  nötig wurde), geht dessen Eingabe verloren – einfach danach neu ausfüllen.
 - Die Feiertags-/Ferien-Daten stammen von der öffentlichen, kostenlosen
   OpenHolidaysAPI (Subdivision `DE-BY` = Bayern).
