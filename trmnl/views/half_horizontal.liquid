@@ -1,0 +1,26 @@
+{% comment %} TRMNL-Layout: Half Horizontal (obere/untere Hälfte) {% endcomment %}
+<div class="layout layout--row gap--space-between">
+
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="value value--large">{{ auftraege_gesamt }}</span>
+      <span class="label">Aufträge</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="title title--small">{{ oeffnung_text }}</span>
+      <span class="description clamp--2">{{ notiz }}</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="title_bar">
+  <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+  <span class="title">{{ kurzname }}</span>
+  <span class="instance">{{ datum }}</span>
+</div>

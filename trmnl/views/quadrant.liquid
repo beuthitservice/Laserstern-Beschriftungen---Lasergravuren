@@ -1,0 +1,15 @@
+{% comment %} TRMNL-Layout: Quadrant (Viertel-Bildschirm) {% endcomment %}
+<div class="layout">
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="value value--large">{{ auftraege_gesamt }}</span>
+      <span class="label">Aufträge · {% if geoeffnet %}geöffnet{% else %}geschlossen{% endif %}</span>
+    </div>
+  </div>
+</div>
+
+<div class="title_bar">
+  <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+  <span class="title">{{ kurzname }}</span>
+</div>

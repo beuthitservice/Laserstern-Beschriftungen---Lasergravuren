@@ -1,0 +1,54 @@
+{% comment %} TRMNL-Layout: Full (ganzer Bildschirm) {% endcomment %}
+<div class="layout layout--col gap--space-between">
+
+  <div class="grid grid--cols-3">
+    <div class="item">
+      <div class="meta"></div>
+      <div class="content">
+        <span class="value value--xlarge">{{ auftraege_offen }}</span>
+        <span class="label">Offen</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="meta"></div>
+      <div class="content">
+        <span class="value value--xlarge">{{ auftraege_in_arbeit }}</span>
+        <span class="label">In Arbeit</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="meta"></div>
+      <div class="content">
+        <span class="value value--xlarge">{{ auftraege_abholbereit }}</span>
+        <span class="label">Abholbereit</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="title">{{ oeffnung_text }}</span>
+      <span class="description">{{ notiz }}</span>
+    </div>
+  </div>
+
+  <div class="grid grid--cols-2">
+    {% for maschine in maschinen %}
+    <div class="item">
+      <div class="meta"></div>
+      <div class="content">
+        <span class="title title--small">{{ maschine.name }}</span>
+        <span class="label {% if maschine.status == 'frei' %}label--outline{% else %}label--inverted{% endif %}">{{ maschine.status }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+<div class="title_bar">
+  <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+  <span class="title">{{ kurzname }}</span>
+  <span class="instance">{{ wochentag }}, {{ datum }} · Stand {{ stand }}</span>
+</div>

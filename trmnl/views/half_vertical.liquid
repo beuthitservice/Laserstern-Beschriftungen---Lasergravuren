@@ -1,0 +1,32 @@
+{% comment %} TRMNL-Layout: Half Vertical (linke/rechte Hälfte) {% endcomment %}
+<div class="layout layout--col gap--space-between">
+
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="value value--large">{{ auftraege_offen }}</span>
+      <span class="label">Offen</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="value value--large">{{ auftraege_abholbereit }}</span>
+      <span class="label">Abholbereit</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="meta"></div>
+    <div class="content">
+      <span class="description clamp--3">{{ oeffnung_text }}</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="title_bar">
+  <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg" />
+  <span class="title">{{ kurzname }}</span>
+</div>
