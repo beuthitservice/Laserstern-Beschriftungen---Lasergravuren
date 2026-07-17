@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$(git rev-parse --show-toplevel)/.codex/hooks/git-sync-on-start.sh\"",
+            "timeout": 60,
+            "statusMessage": "Synchronisiere Repository mit GitHub"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$(git rev-parse --show-toplevel)/.codex/hooks/git-sync-status-on-stop.sh\"",
+            "timeout": 30,
+            "statusMessage": "Prüfe Git-Synchronisierungsstatus"
+          }
+        ]
+      }
+    ]
+  }
+}
