@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kalenderübersicht – Exchange &amp; Bayern</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Kalenderübersicht</h1>
+    <p class="subtitle">Exchange-365-Termine, bayerische Feiertage &amp; Schulferien in einer Ansicht</p>
+  </header>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background:#2563eb"></span> Exchange-Termine</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:#dc2626"></span> Bayerische Feiertage</span>
+    <span class="legend-item"><span class="legend-swatch" style="background:#16a34a"></span> Bayerische Schulferien</span>
+  </div>
+
+  <div class="toolbar">
+    <div class="nav-group">
+      <button id="prevBtn" title="Vorheriger Monat">‹</button>
+      <button id="todayBtn">Heute</button>
+      <button id="nextBtn" title="Nächster Monat">›</button>
+    </div>
+    <div class="month-title" id="monthTitle">–</div>
+    <div class="spacer"></div>
+    <button id="addEventBtn" class="primary" disabled>+ Neuer Termin</button>
+    <div class="account-box">
+      <span id="accountLabel">Nicht angemeldet</span>
+      <button id="signInBtn">Mit Microsoft anmelden</button>
+      <button id="signOutBtn" style="display:none">Abmelden</button>
+    </div>
+  </div>
+
+  <div id="statusArea"></div>
+
+  <div class="calendar-wrap">
+    <table class="calendar">
+      <thead>
+        <tr>
+          <th class="kw-col">KW</th>
+          <th>Mo</th>
+          <th>Di</th>
+          <th>Mi</th>
+          <th>Do</th>
+          <th>Fr</th>
+          <th>Sa</th>
+          <th>So</th>
+        </tr>
+      </thead>
+      <tbody id="calendarBody">
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="app-footer">
+    Feiertags- und Ferien-Daten: <a href="https://www.openholidaysapi.org" target="_blank" rel="noopener">OpenHolidaysAPI</a> ·
+    Kalenderdaten: Microsoft Graph
+  </footer>
+
+  <dialog id="eventDialog" class="event-dialog">
+    <form method="dialog" id="eventForm">
+      <div class="dialog-inner">
+        <h2>Neuer Termin</h2>
+        <div class="form-row">
+          <label for="fSubject">Betreff *</label>
+          <input type="text" id="fSubject" name="subject" required maxlength="200" />
+        </div>
+        <div class="form-row">
+          <label for="fDate">Datum *</label>
+          <input type="date" id="fDate" name="date" required />
+        </div>
+        <div class="form-row inline">
+          <input type="checkbox" id="fAllDay" name="allday" />
+          <label for="fAllDay" style="margin:0">Ganztägig</label>
+        </div>
+        <div class="form-row two-col" id="timeRow">
+          <div>
+            <label for="fStart">Start</label>
+            <input type="time" id="fStart" name="start" value="09:00" />
+          </div>
+          <div>
+            <label for="fEnd">Ende</label>
+            <input type="time" id="fEnd" name="end" value="10:00" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="fLocation">Ort</label>
+          <input type="text" id="fLocation" name="location" maxlength="200" />
+        </div>
+        <div class="form-row">
+          <label for="fNotes">Notiz</label>
+          <textarea id="fNotes" name="notes" rows="3"></textarea>
+        </div>
+        <div class="dialog-actions">
+          <button type="button" id="cancelEventBtn">Abbrechen</button>
+          <button type="submit" class="primary" id="saveEventBtn">Speichern</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://alcdn.msauth.net/browser/3.24.0/js/msal-browser.min.js" crossorigin="anonymous"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
